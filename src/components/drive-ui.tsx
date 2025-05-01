@@ -193,7 +193,7 @@ export function DriveUI() {
   const [viewMode, setViewMode] = useState<"list" | "grid">("list")
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false)
 
-  const currentFolder = mockData[currentPath] || mockData.root
+  const currentFolder = mockData[currentPath] ?? mockData.root
   const pathSegments = currentPath === "root" ? [] : currentPath.split("/")
 
   const getFileIcon = (type: string) => {
@@ -294,7 +294,7 @@ export function DriveUI() {
                         onClick={() => navigateToBreadcrumb(index)}
                         className="text-gray-200 hover:text-white"
                       >
-                        {mockData[pathSegments.slice(0, index + 1).join("/")]?.name || segment}
+                        {mockData[pathSegments.slice(0, index + 1).join("/")]?.name ?? segment}
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                   </React.Fragment>
@@ -361,7 +361,7 @@ export function DriveUI() {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentFolder.files.map((file) => (
+                  {currentFolder?.files.map((file) => (
                     <tr
                       key={file.id}
                       className="border-t hover:bg-muted/50 cursor-pointer"
@@ -376,7 +376,7 @@ export function DriveUI() {
                         </div>
                       </td>
                       <td className="p-3 text-gray-300 hidden md:table-cell">{file.modified}</td>
-                      <td className="p-3 text-gray-300 hidden md:table-cell">{file.size || "--"}</td>
+                      <td className="p-3 text-gray-300 hidden md:table-cell">{file.size ?? "--"}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -384,7 +384,7 @@ export function DriveUI() {
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {currentFolder.files.map((file) => (
+              {currentFolder?.files.map((file) => (
                 <div
                   key={file.id}
                   className="border rounded-lg p-4 hover:bg-muted/50 cursor-pointer flex flex-col items-center text-center"
