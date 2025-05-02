@@ -1,6 +1,6 @@
 import "server-only";
 
-import { folders_table as foldersSchema, files_table as filesSchema } from "./schema";
+import { folders_table as foldersSchema, files_table as filesSchema, type DB_FileType } from "./schema";
 import { eq } from "drizzle-orm";
 import { db } from "~/server/db";
 
@@ -8,6 +8,24 @@ export const QUERIES = {
     getAllParentsForFolder,
     getFolders,
     getFiles,
+}
+
+export const MUTATIONS = {
+    createFile,
+}
+
+async function createFile(input: {
+    file: {
+        name: string;
+        size: number;
+        url: string;
+    },
+    userId: string;
+}) {
+    return await db.insert(filesSchema).values({
+        ...input.file,
+        parent: 1,
+    });
 }
 
 async function getAllParentsForFolder(folderId: number) {
