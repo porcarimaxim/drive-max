@@ -10,7 +10,7 @@ import {
 
 const createTable = singlestoreTableCreator((name) => `drive-max_${name}`);
 
-export const files = createTable(
+export const files_table = createTable(
   "files_table",
   {
     id: bigint("id", { mode: "number", unsigned: true })
@@ -26,7 +26,7 @@ export const files = createTable(
   },
 );
 
-export const folders = createTable(
+export const folder_table = createTable(
   "folders_table",
   {
     id: bigint("id", { mode: "number", unsigned: true })
