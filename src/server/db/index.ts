@@ -13,15 +13,15 @@ const globalForDb = globalThis as unknown as {
 };
 
 export const conn =
-  globalForDb.conn ?? 
-  createPool({ 
+  globalForDb.conn ??
+  createPool({
     host: env.SINGLESTORE_HOST,
     port: parseInt(env.SINGLESTORE_PORT),
     user: env.SINGLESTORE_USER,
     password: env.SINGLESTORE_PASS,
     database: env.SINGLESTORE_DATABASE,
     ssl: {},
-    maxIdle: 0 
+    maxIdle: 0,
   });
 if (env.NODE_ENV !== "production") globalForDb.conn = conn;
 

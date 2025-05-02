@@ -12,11 +12,11 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
 
-      SINGLESTORE_USER: z.string(),
-      SINGLESTORE_PASS: z.string(),
-      SINGLESTORE_HOST: z.string(),
-      SINGLESTORE_PORT: z.string(),
-      SINGLESTORE_DATABASE: z.string(),
+    SINGLESTORE_USER: z.string(),
+    SINGLESTORE_PASS: z.string(),
+    SINGLESTORE_HOST: z.string(),
+    SINGLESTORE_PORT: z.string(),
+    SINGLESTORE_DATABASE: z.string(),
   },
 
   /**
