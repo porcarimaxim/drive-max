@@ -9,10 +9,10 @@ const f = createUploadthing();
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
-  imageUploader: f({
-    image: {
-      maxFileSize: "4MB",
-      maxFileCount: 1,
+  driveUploader: f({
+    blob: {
+      maxFileSize: "1GB",
+      maxFileCount: 9999,
     },
   })
     .input(
@@ -35,7 +35,7 @@ export const ourFileRouter = {
         // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw new UploadThingError("Folder not found");
       }
-      
+
       if (folder.ownerId !== user.userId) {
         // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw new UploadThingError("Unauthorized");

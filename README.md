@@ -10,5 +10,5 @@
 - [x] Add ownership to files and folders 
 - [x] Upload files to the right folder
 - [ ] Delete files button
-- [ ] Allow files that arent't image to be uploaded
+- [x] Allow files that arent't image to be uploaded
 - [ ] Real homepage
