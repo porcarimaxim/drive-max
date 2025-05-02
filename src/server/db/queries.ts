@@ -66,9 +66,14 @@ function getFolders(folderId: number) {
   return db
     .select()
     .from(foldersSchema)
-    .where(eq(foldersSchema.parent, folderId));
+    .where(eq(foldersSchema.parent, folderId))
+    .orderBy(foldersSchema.id);
 }
 
 function getFiles(folderId: number) {
-  return db.select().from(filesSchema).where(eq(filesSchema.parent, folderId));
+  return db
+    .select()
+    .from(filesSchema)
+    .where(eq(filesSchema.parent, folderId))
+    .orderBy(filesSchema.id);
 }
