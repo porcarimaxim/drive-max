@@ -1,60 +1,74 @@
 import "server-only";
 
-import { folders_table as foldersSchema, files_table as filesSchema, type DB_FileType } from "./schema";
+import {
+  folders_table as foldersSchema,
+  files_table as filesSchema,
+} from "./schema";
 import { eq } from "drizzle-orm";
 import { db } from "~/server/db";
 
 export const QUERIES = {
-    getAllParentsForFolder,
-    getFolders,
-    getFiles,
-}
+  getAllParentsForFolder,
+  getFolders,
+  getFiles,
+  getFolderById,
+};
 
 export const MUTATIONS = {
-    createFile,
-}
+  createFile,
+};
 
 async function createFile(input: {
-    file: {
-        name: string;
-        size: number;
-        url: string;
-    },
-    userId: string;
+  file: {
+    name: string;
+    size: number;
+    url: string;
+    parent: number;
+  };
+  userId: string;
 }) {
-    return await db.insert(filesSchema).values({
-        ...input.file,
-        parent: 1,
-    });
+  return await db.insert(filesSchema).values({
+    ...input.file,
+    ownerId: input.userId,
+  });
+}
+
+async function getFolderById(folderId: number) {
+  const folder = await db
+    .select()
+    .from(foldersSchema)
+    .where(eq(foldersSchema.id, folderId));
+
+  return folder[0];
 }
 
 async function getAllParentsForFolder(folderId: number) {
-    const parents = [];
-    let currentId: number | null = folderId;
-    while (currentId !== null) {
-        const folder = await db.selectDistinct().from(foldersSchema).where(eq(foldersSchema.id, currentId));
+  const parents = [];
+  let currentId: number | null = folderId;
+  while (currentId !== null) {
+    const folder = await db
+      .selectDistinct()
+      .from(foldersSchema)
+      .where(eq(foldersSchema.id, currentId));
 
-        if (!folder[0]) {
-            throw new Error("Parent folder not found");
-        }
-
-        parents.unshift  (folder[0]);
-        currentId = folder[0].parent;
+    if (!folder[0]) {
+      throw new Error("Parent folder not found");
     }
 
-    return parents;
+    parents.unshift(folder[0]);
+    currentId = folder[0].parent;
+  }
+
+  return parents;
 }
 
 function getFolders(folderId: number) {
-    return db
-        .select()
-        .from(foldersSchema)
-        .where(eq(foldersSchema.parent, folderId));
+  return db
+    .select()
+    .from(foldersSchema)
+    .where(eq(foldersSchema.parent, folderId));
 }
 
 function getFiles(folderId: number) {
-    return db
-        .select()
-        .from(filesSchema)
-        .where(eq(filesSchema.parent, folderId));
+  return db.select().from(filesSchema).where(eq(filesSchema.parent, folderId));
 }

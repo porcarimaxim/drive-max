@@ -1,11 +1,15 @@
-'use client'
+"use client";
 
-import { Upload, ChevronRight } from "lucide-react";
-import { Button } from "~/components/ui/button";
+import { ChevronRight } from "lucide-react";
 import { FileRow, FolderRow } from "./file-row";
 import type { files_table, folders_table } from "~/server/db/schema";
 import Link from "next/link";
-import { SignedOut, SignInButton, SignedIn, UserButton, SignUpButton } from "@clerk/nextjs";
+import {
+  SignedOut,
+  SignInButton,
+  SignedIn,
+  UserButton,
+} from "@clerk/nextjs";
 import { UploadButton } from "~/components/uploadthing";
 import { useRouter } from "next/navigation";
 
@@ -13,8 +17,8 @@ export default function DriveContents(props: {
   files: (typeof files_table.$inferSelect)[];
   folders: (typeof folders_table.$inferSelect)[];
   parents: (typeof folders_table.$inferSelect)[];
+  currentFolderId: number;
 }) {
-
   const navigate = useRouter();
 
   return (
@@ -22,11 +26,8 @@ export default function DriveContents(props: {
       <div className="mx-auto max-w-6xl">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center">
-            <Link
-              href="/f/1"
-              className="mr-2 text-gray-300 hover:text-white"
-            >
-              {'My Drive'}
+            <Link href="/f/1" className="mr-2 text-gray-300 hover:text-white">
+              {"My Drive"}
             </Link>
             {props.parents.map((folder) => (
               <div key={folder.id} className="flex items-center">
@@ -66,9 +67,15 @@ export default function DriveContents(props: {
             ))}
           </ul>
         </div>
-        <UploadButton endpoint="imageUploader" onClientUploadComplete={() => {
-          navigate.refresh();
-        }} />
+        <UploadButton
+          endpoint="imageUploader"
+          onClientUploadComplete={() => {
+            navigate.refresh();
+          }}
+          input={{
+            folderId: props.currentFolderId,
+          }}
+        />
       </div>
     </div>
   );

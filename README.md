@@ -7,7 +7,8 @@
 - [ ] Add analytics 
 
 ## 2 may 2025
-- [ ] Real homepage
-- [ ] Upload files to the right folder
+- [x] Add ownership to files and folders 
+- [x] Upload files to the right folder
 - [ ] Delete files button
 - [ ] Allow files that arent't image to be uploaded
+- [ ] Real homepage
