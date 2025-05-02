@@ -4,12 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { FileRow, FolderRow } from "./file-row";
 import type { files_table, folders_table } from "~/server/db/schema";
 import Link from "next/link";
-import {
-  SignedOut,
-  SignInButton,
-  SignedIn,
-  UserButton,
-} from "@clerk/nextjs";
+import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
 import { UploadButton } from "~/components/uploadthing";
 import { useRouter } from "next/navigation";
 

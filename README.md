@@ -5,10 +5,5 @@
 - [x] Add auth
 - [x] Add file uploading
 - [ ] Add analytics 
-
-## 2 may 2025
-- [x] Add ownership to files and folders 
-- [x] Upload files to the right folder
-- [ ] Delete files button
-- [x] Allow files that arent't image to be uploaded
-- [ ] Real homepage
+- [ ] Add Delete
+- [ ] Real homepage + onboarding
