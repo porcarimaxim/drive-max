@@ -26,7 +26,7 @@ export const files_table = createTable(
   },
 );
 
-export const folder_table = createTable(
+export const folders_table = createTable(
   "folders_table",
   {
     id: bigint("id", {  mode: "number", unsigned: true })

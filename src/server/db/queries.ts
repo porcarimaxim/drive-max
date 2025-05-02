@@ -1,6 +1,6 @@
 import "server-only";
 
-import { folder_table as foldersSchema, files_table as filesSchema } from "./schema";
+import { folders_table as foldersSchema, files_table as filesSchema } from "./schema";
 import { eq } from "drizzle-orm";
 import { db } from "~/server/db";
 
