@@ -25,10 +25,15 @@ export function FileRow(props: { file: typeof files_table.$inferSelect }) {
         <div className="col-span-2 text-gray-400">{"File"}</div>
         <div className="col-span-3 text-gray-400">{file.size}</div>
         <div className="col-span-1 text-gray-400">
-          <Button variant="ghost" size="icon" onClick={() => {
-            deleteFile(file.id);
-          }} aria-label="Delete file">
-            <Trash2Icon className="w-4 h-4" />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => {
+              void deleteFile(file.id);
+            }}
+            aria-label="Delete file"
+          >
+            <Trash2Icon className="h-4 w-4" />
           </Button>
         </div>
       </div>

@@ -10,36 +10,37 @@ import { cookies } from "next/headers";
 const utApi = new UTApi();
 
 export async function deleteFile(fileId: number) {
-    const session = await auth();
+  const session = await auth();
 
-    if (!session.userId) {
-        throw {error: "Unauthorized"};
-    } 
+  if (!session.userId) {
+    return { error: "Unauthorized" };
+  }
 
-    const [file] = await db
-      .select()
-      .from(files_table)
-      .where(
-        and(eq(files_table.id, fileId), eq(files_table.ownerId, session.userId))
-      );
+  const [file] = await db
+    .select()
+    .from(files_table)
+    .where(
+      and(eq(files_table.id, fileId), eq(files_table.ownerId, session.userId)),
+    );
 
-    if (!file) {
-        return { error: "File not found" };
-    }
-  
-    const utResponse = await utApi.deleteFiles([file.url.replace("https://utfs.io/f/", "")]);
+  if (!file) {
+    return { error: "File not found" };
+  }
 
-    if (!utResponse.success) {
-        return { error: "Failed to delete file from UploadThing" };
-    }
+  const utResponse = await utApi.deleteFiles([
+    file.url.replace("https://utfs.io/f/", ""),
+  ]);
 
-    console.log(utResponse);
+  if (!utResponse.success) {
+    return { error: "Failed to delete file from UploadThing" };
+  }
 
-    const dbResult = await db.delete(files_table).where(eq(files_table.id, fileId));
+  await db
+    .delete(files_table)
+    .where(eq(files_table.id, fileId));
 
-    const c = await cookies();
+  const c = await cookies();
+  c.set("force-refresh", JSON.stringify(Math.random()));
 
-    c.set("force-refresh", JSON.stringify(Math.random()));
-
-    return { success: true };
+  return { success: true };
 }
