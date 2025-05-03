@@ -4,7 +4,7 @@ import {
   folders_table as foldersSchema,
   files_table as filesSchema,
 } from "./schema";
-import { eq } from "drizzle-orm";
+import { eq, isNull, and } from "drizzle-orm";
 import { db } from "~/server/db";
 
 export const QUERIES = {
@@ -12,6 +12,7 @@ export const QUERIES = {
   getFolders,
   getFiles,
   getFolderById,
+  getRootFolderForUser,
 };
 
 export const MUTATIONS = {
@@ -77,3 +78,15 @@ function getFiles(folderId: number) {
     .where(eq(filesSchema.parent, folderId))
     .orderBy(filesSchema.id);
 }
+
+
+async function getRootFolderForUser(userId: string) {
+  const folder = await db
+    .select()
+    .from(foldersSchema)
+    .where(
+      and(eq(foldersSchema.ownerId, userId), isNull(foldersSchema.parent)),
+    );
+
+  return folder[0];
+} 

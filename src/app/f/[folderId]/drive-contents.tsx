@@ -38,7 +38,7 @@ export default function DriveContents(props: {
           </div>
           <div>
             <SignedOut>
-              <SignInButton />
+              <SignInButton forceRedirectUrl={"/drive"} />
             </SignedOut>
             <SignedIn>
               <UserButton />
